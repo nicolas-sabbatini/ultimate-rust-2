@@ -8,15 +8,9 @@
 
 // Challenge: Clippy doesn't find *everything*. What else would you change to make this code better?
 
-use std::f32::consts::PI;
-
 fn count_to_5() -> i32 {
-    let mut count = 0;
-    loop {
-        if count > PI as i32 && count > 5 {
-            break;
-        }
-        count += 1;
+    for i in 1..=5 {
+        println!("{}", i);
     }
     5
 }
