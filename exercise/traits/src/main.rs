@@ -1,8 +1,13 @@
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Cake {
     Chocolate,
     MapleBacon,
     Spice,
+}
+impl From<&Party> for Cake {
+    fn from(p: &Party) -> Self {
+        p.cake.clone()
+    }
 }
 
 #[derive(Debug)]
@@ -31,7 +36,7 @@ fn main() {
     // - Derive the Debug trait for the Cake enum above so this code will work. Then, run the code.
 
     let cake = Cake::Spice;
-    admire_cake(cake);
+    admire_cake(&cake);
 
     // 2. Uncomment the code below. It doesn't work since `cake` was *moved* into the admire_cake()
     // function. Let's fix the Cake enum so the code below works without any changes.
@@ -95,20 +100,23 @@ fn main() {
     // - Implement `From<Party> for Cake` so that the function call below works.
     //
 
-    // smell_cake(party);
+    smell_cake(&party);
 
     // Challenge 2: Implement `From<&Party> for Cake` so that you can smell your cake without
     // consuming it. Change the code above to pass in a &party. Then uncomment and run the code
     // below. After all, you want to smell your cake and eat it, too!
 
-    // println!("Yum! I'm eating this cake: {:?}. Oops, I dropped it on the floor.", party.cake);
-    // drop(cake);
+    println!(
+        "Yum! I'm eating this cake: {:?}. Oops, I dropped it on the floor.",
+        party.cake
+    );
+    drop(cake);
 }
 
-pub fn admire_cake(cake: Cake) {
+pub fn admire_cake(cake: &Cake) {
     println!("What a nice {:?} cake! 🎂", cake);
 }
 
-// pub fn smell_cake<T: Into<Cake>>(something: T) {
-//     println!("Hmm...something smells like a {:?} cake!", something.into());
-// }
+pub fn smell_cake<T: Into<Cake>>(something: T) {
+    println!("Hmm...something smells like a {:?} cake!", something.into());
+}
